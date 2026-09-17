@@ -11,7 +11,7 @@ function statusCopy(status: Status): string {
     case "sending":
       return "Sending…";
     case "sent":
-      return "Received. We will reply from Pristina, CET.";
+      return "Received. We reply from Pristina, CET.";
     case "error":
       return "Could not send. Try again or email cancolak666@icloud.com.";
     default: {

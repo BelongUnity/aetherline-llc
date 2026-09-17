@@ -54,6 +54,34 @@ async function sendResend(payload: EngageBody): Promise<{ ok: boolean; error?: s
   return { ok: true };
 }
 
+async function sendFormSubmit(
+  payload: EngageBody,
+): Promise<{ ok: boolean; error?: string }> {
+  const response = await fetch(
+    `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_TO)}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        message: payload.message,
+        _subject: `Engage: ${payload.name}`,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const detail = await response.text();
+    return { ok: false, error: detail.slice(0, 400) };
+  }
+
+  return { ok: true };
+}
+
 export async function POST(request: Request) {
   const form = await request.formData();
   const payload = readEngage(form);
@@ -61,7 +89,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Missing fields." }, { status: 400 });
   }
 
-  const sent = await sendResend(payload);
+  const sent = process.env.RESEND_API_KEY
+    ? await sendResend(payload)
+    : await sendFormSubmit(payload);
   if (!sent.ok) {
     return NextResponse.json(
       { ok: false, error: sent.error ?? "Mail failed." },

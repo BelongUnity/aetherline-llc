@@ -1,34 +1,60 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const instrument = Instrument_Sans({
-  variable: "--font-instrument",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const plex = IBM_Plex_Mono({
-  variable: "--font-plex",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Aetherline L.L.C. Remote IT operations",
+  metadataBase: new URL("https://aetherline.llc"),
+  title: "Aetherline L.L.C. | AI Agents, Kurumsal IT & Dijital Marka Mimarisi",
   description:
-    "SAP Basis, Active Directory, Entra ID, Microsoft 365, SCCM, and ITIL run by Aetherline L.L.C from Pristina. Invoice as a contractor.",
+    "Aetherline L.L.C. — Pristina, Kosova & DACH. Gülçin Turhan (CEO) ve Can Çolak (CTO) liderliğinde AI Voice Agent, Web Scraping, 360° Sosyal Medya Yönetimi ve Kurumsal IT / SAP Basis çözümleri.",
+  applicationName: "Aetherline L.L.C.",
+  keywords: [
+    "AI Voice Agent",
+    "AI Chatbot",
+    "Web Scraping",
+    "Veri Toplama",
+    "SAP Basis",
+    "Microsoft 365 Zero-Trust",
+    "Sosyal Medya Yönetimi",
+    "Kurumsal IT",
+    "Pristina",
+    "Kosovo",
+    "DACH",
+  ],
+  openGraph: {
+    title: "Aetherline L.L.C. | AI Agents, IT & Dijital Marka Mimarisi",
+    description:
+      "7/24 çalışan uzman AI Agent işgücü ve iki kurucu ortak liderliğinde uçtan uca dijital & kurumsal IT çözümleri.",
+    url: "https://aetherline.llc",
+    siteName: "Aetherline L.L.C.",
+    locale: "tr_TR",
+    type: "website",
+  },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
-      lang="en"
-      className={`${instrument.variable} ${plex.variable} h-full antialiased`}
+      lang="tr"
+      className={`${jakarta.variable} ${jetbrains.variable} scroll-smooth dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#030508] text-[#e8eef0]">
-        <a className="skip-link" href="#engage">
-          Skip to engage
-        </a>
+      <body className="bg-[#030712] text-slate-100 font-[var(--font-jakarta)] antialiased overflow-x-hidden selection:bg-sky-500 selection:text-white">
         {children}
       </body>
     </html>
